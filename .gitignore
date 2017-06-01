@@ -10,7 +10,6 @@
 *.s
 *.mo
 *.pc
-
 # Misc
 *.patch
 *.gz
@@ -25,3 +24,10 @@ cscope.*
 .*.swp
 # Failsafes
 !.gitignore
+# Android
+objs/
+libs/
+libselinux/include/selinux/android.h
+libselinux/src/android/*
+# Mac OS
+*.DS_Store
