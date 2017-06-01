@@ -169,7 +169,6 @@ common_ldlibs := \
   -lc
 
 common_includes := \
-  libselinux/include \
   include \
   libsepol/include/ \
   libsepol/src/ \
@@ -179,14 +178,23 @@ common_includes := \
   pcre/include_internal \
   pcre/include \
   libpcre/dist \
+  libselinux/src \
+  libselinux/include \
   libselinux/include/selinux \
-  /usr/include/python2.7
+  /usr/include/python2.7 \
+  /usr/include/python3.*
 
 yacc_flags := -x c -std=gnu89
 
 FIND_HOSTOS := $(shell uname -s)
 HOST_NAME := $(shell echo $(FIND_HOSTOS) |sed -e s/L/l/ |sed -e s/D/d/ |sed s/W/w/ )
-mkdir-android := $(shell mkdir -vp $(addprefix $(LOCAL_PATH)/ libselinux/src/, android))
+
+mkdir-android := $(shell mkdir -vp $(addprefix $(LOCAL_PATH)/libselinux/src/, android))
+mkdir-include := $(shell mkdir -vp $(addprefix $(LOCAL_PATH)/include/, openssl private packagelistparser))
+
+get-openssl := $(shell wget -qO - "https://android.googlesource.com/platform/external/boringssl/+archive/master/src/include/openssl.tar.gz" -O - | tar -xz -C include/openssl)
+get-private := $(shell wget -qO - "https://android.googlesource.com/platform/system/core/+archive/master/libcutils/include/private.tar.gz" -O - | tar -xz -C include/private)
+get-log := $(shell wget -qO - "https://android.googlesource.com/platform/system/core/+archive/master/liblog/include.tar.gz" -O - | tar -xz -C include)
 
 ifeq ($(HOST_NAME),darwin)
   cmds := \
@@ -195,7 +203,9 @@ ifeq ($(HOST_NAME),darwin)
     $(shell wget -qO - "https://android.googlesource.com/platform/external/selinux/+/master/libselinux/src/android/android.c?format=text" | \
     base64 -D >  libselinux/src/android/android.c) \
     $(shell wget -qO - "https://android.googlesource.com/platform/external/selinux/+/master/libselinux/src/android/android_host.c?format=text" | \
-    base64 -D >  libselinux/src/android/android_host.c)
+    base64 -D >  libselinux/src/android/android_host.c) \
+    $(shell wget -qO - "https://android.googlesource.com/platform/system/core/+/master/libpackagelistparser/include/packagelistparser/packagelistparser.h?format=text" | \
+    base64 -D >  include/packagelistparser/packagelistparser.h)
 else
   cmds := \
     $(shell wget -qO - "https://android.googlesource.com/platform/external/selinux/+/master/libselinux/include/selinux/android.h?format=text" | \
@@ -203,11 +213,13 @@ else
     $(shell wget -qO - "https://android.googlesource.com/platform/external/selinux/+/master/libselinux/src/android/android.c?format=text" | \
     base64 -d >  libselinux/src/android/android.c) \
     $(shell wget -qO - "https://android.googlesource.com/platform/external/selinux/+/master/libselinux/src/android/android_host.c?format=text" | \
-    base64 -d >  libselinux/src/android/android_host.c)
+    base64 -d >  libselinux/src/android/android_host.c) \
+    $(shell wget -qO - "https://android.googlesource.com/platform/system/core/+/master/libpackagelistparser/include/packagelistparser/packagelistparser.h?format=text" | \
+    base64 -d >  include/packagelistparser/packagelistparser.h)
 endif
 
 
-libselinux_prepare := $(mkdir-android) $(cmds)
+libselinux_prepare := $(mkdir-android) $(mkdir-include) $(get-openssl) $(get-private) $(get-log) $(cmds)
 
 ##
 # libpcre2.a

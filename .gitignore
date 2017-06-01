@@ -27,6 +27,7 @@ cscope.*
 # Android
 objs/
 libs/
+include/
 libselinux/include/selinux/android.h
 libselinux/src/android/*
 # Mac OS
