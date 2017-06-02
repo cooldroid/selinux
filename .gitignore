@@ -30,5 +30,9 @@ libs/
 include/
 libselinux/include/selinux/android.h
 libselinux/src/android/*
+checkpolicy/lex.yy.c
+checkpolicy/y.tab.c
+checkpolicy/policy_parse.*
+checkpolicy/y.*
 # Mac OS
 *.DS_Store
