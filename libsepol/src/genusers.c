@@ -7,7 +7,7 @@
 
 #include <sepol/policydb/policydb.h>
 
-#ifndef __APPLE__
+#if ! defined(__APPLE__) && ! defined(ANDROID)
 #include <stdio_ext.h>
 #endif
 
@@ -46,7 +46,7 @@ static int load_users(struct policydb *policydb, const char *path)
 	if (fp == NULL)
 		return -1;
 
-#ifdef __APPLE__
+#if defined(__APPLE__) || defined(ANDROID)
 	if ((buffer = (char *)malloc(255 * sizeof(char))) == NULL) {
 	  ERR(NULL, "out of memory");
 	  return -1;

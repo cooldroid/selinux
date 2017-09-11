@@ -177,7 +177,7 @@ int sepol_ibpkey_query(sepol_handle_t *handle,
 
 err:
 	ERR(handle, "could not query ibpkey subnet prefix: %#lx range %u - %u exists",
-	    subnet_prefix, low, high);
+	    (unsigned long) subnet_prefix, low, high);
 	return STATUS_ERR;
 }
 
@@ -204,7 +204,7 @@ int sepol_ibpkey_modify(sepol_handle_t *handle,
 
 err:
 	ERR(handle, "could not load ibpkey subnet prefix: %#lx range %u - %u exists",
-	    subnet_prefix, low, high);
+	    (unsigned long) subnet_prefix, low, high);
 	if (ibpkey) {
 		context_destroy(&ibpkey->context[0]);
 		free(ibpkey);
