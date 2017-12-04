@@ -25,7 +25,7 @@ cscope.*
 # Failsafes
 !.gitignore
 # Android
-objs/
+obj/
 libs/
 include/
 libselinux/include/selinux/android.h

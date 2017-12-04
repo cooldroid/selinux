@@ -223,6 +223,8 @@ else
     base64 -d > libselinux/include/selinux/android.h) \
     $(shell wget -qO - "https://android.googlesource.com/platform/external/selinux/+/master/libselinux/src/android/android.c?format=text" | \
     base64 -d >  libselinux/src/android/android.c) \
+    $(shell wget -qO - "https://android.googlesource.com/platform/external/selinux/+/master/libselinux/src/android/android_common.h?format=text" | \
+    base64 -d >  libselinux/src/android/android_common.h) \
     $(shell wget -qO - "https://android.googlesource.com/platform/external/selinux/+/master/libselinux/src/android/android_host.c?format=text" | \
     base64 -d >  libselinux/src/android/android_host.c) \
     $(shell wget -qO - "https://android.googlesource.com/platform/system/core/+/master/libpackagelistparser/include/packagelistparser/packagelistparser.h?format=text" | \
