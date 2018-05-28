@@ -64,8 +64,9 @@ int selinuxfs_exists(void)
 	fp = fopen("/proc/filesystems", "re");
 	if (!fp)
 		return 1; /* Fail as if it exists */
+#if __ANDROID_API__ >= 23
 	__fsetlocking(fp, FSETLOCKING_BYCALLER);
-
+#endif
 	num = getline(&buf, &len, fp);
 	while (num != -1) {
 		if (strstr(buf, SELINUXFS)) {
@@ -105,7 +106,9 @@ static void init_selinuxmnt(void)
 	if (!fp)
 		goto out;
 
+#if __ANDROID_API__ >= 23
 	__fsetlocking(fp, FSETLOCKING_BYCALLER);
+#endif
 	while ((num = getline(&buf, &len, fp)) != -1) {
 		char *tmp;
 		p = strchr(buf, ' ');

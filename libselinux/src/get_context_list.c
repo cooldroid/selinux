@@ -279,7 +279,7 @@ static int get_failsafe_context(const char *user, char ** newcon)
 	if (!fp)
 		return -1;
 
-	ptr = fgets_unlocked(buf, sizeof buf, fp);
+	ptr = fgets(buf, sizeof buf, fp);
 	fclose(fp);
 
 	if (!ptr)

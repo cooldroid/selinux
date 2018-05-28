@@ -97,7 +97,7 @@ int selinux_getenforcemode(int *enforce)
 			fclose(cfg);
 			return -1;
 		}
-		while (fgets_unlocked(buf, selinux_page_size, cfg)) {
+		while (fgets(buf, selinux_page_size, cfg)) {
 			if (strncmp(buf, SELINUXTAG, len))
 				continue;
 			if (!strncasecmp
@@ -165,7 +165,9 @@ static void init_selinux_config(void)
 
 	fp = fopen(SELINUXCONFIG, "re");
 	if (fp) {
+#if __ANDROID_API__ >= 23
 		__fsetlocking(fp, FSETLOCKING_BYCALLER);
+#endif
 		while ((len = getline(&line_buf, &line_len, fp)) > 0) {
 			if (line_buf[len - 1] == '\n')
 				line_buf[len - 1] = 0;
@@ -188,10 +190,6 @@ static void init_selinux_config(void)
 					end--;
 				}
 				continue;
-			} else if (!strncmp(buf_p, SETLOCALDEFS,
-					    sizeof(SETLOCALDEFS) - 1)) {
-				value = buf_p + sizeof(SETLOCALDEFS) - 1;
-				intptr = &load_setlocaldefs;
 			} else if (!strncmp(buf_p, REQUIRESEUSERS,
 					    sizeof(REQUIRESEUSERS) - 1)) {
 				value = buf_p + sizeof(REQUIRESEUSERS) - 1;

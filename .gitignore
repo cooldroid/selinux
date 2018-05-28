@@ -25,3 +25,8 @@ cscope.*
 .*.swp
 # Failsafes
 !.gitignore
+/include/
+/libselinux/src/android/android.c
+/libselinux/include/selinux/android.h
+/libselinux/src/android/android_common.h
+/libselinux/src/android/android_host.c

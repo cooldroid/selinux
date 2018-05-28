@@ -25,7 +25,7 @@ static int get_customizable_type_list(char *** retlist)
 		fclose(fp);
 		return -1;
 	}
-	while (fgets_unlocked(buf, selinux_page_size, fp) && ctr < UINT_MAX) {
+	while (fgets(buf, selinux_page_size, fp) && ctr < UINT_MAX) {
 		ctr++;
 	}
 	rewind(fp);
@@ -35,7 +35,7 @@ static int get_customizable_type_list(char *** retlist)
 						  ctr + 1);
 		if (list) {
 			i = 0;
-			while (fgets_unlocked(buf, selinux_page_size, fp)
+			while (fgets(buf, selinux_page_size, fp)
 			       && i < ctr) {
 				buf[strlen(buf) - 1] = 0;
 				list[i] = (char *) strdup(buf);

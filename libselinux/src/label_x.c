@@ -119,8 +119,9 @@ static int init(struct selabel_handle *rec, const struct selinux_opt *opts,
 		path = selinux_x_context_path();
 	if ((fp = fopen(path, "re")) == NULL)
 		return -1;
+#if __ANDROID_API__ >= 23
 	__fsetlocking(fp, FSETLOCKING_BYCALLER);
-
+#endif
 	if (fstat(fileno(fp), &sb) < 0)
 		return -1;
 	if (!S_ISREG(sb.st_mode)) {
