@@ -133,7 +133,8 @@ HOST_NAME := $(shell echo $(FIND_HOSTOS) |sed -e s/L/l/ |sed -e s/D/d/ |sed s/W/
 mkdir-android := $(shell mkdir -vp $(addprefix $(LOCAL_PATH)/libselinux/src/, android))
 mkdir-include := $(shell mkdir -vp $(addprefix $(LOCAL_PATH)/include/, openssl private))
 
-ifeq ($(shell test -d $(LOCAL_PATH)/include || echo "true"),"")
+include-common-exists := $(shell test -f $(LOCAL_PATH)/include/android/log.h || echo "true")
+ifdef include-common-exists
   get-openssl := $(shell wget -qO - "https://android.googlesource.com/platform/external/boringssl/+archive/master/src/include/openssl.tar.gz" -O - | tar -xz -C $(LOCAL_PATH)/include/openssl)
   get-private := $(shell wget -qO - "https://android.googlesource.com/platform/system/core/+archive/master/libcutils/include/private.tar.gz" -O - | tar -xz -C $(LOCAL_PATH)/include/private)
   get-log := $(shell wget -qO - "https://android.googlesource.com/platform/system/core/+archive/master/liblog/include.tar.gz" -O - | tar -xz -C $(LOCAL_PATH)/include)
@@ -143,7 +144,8 @@ else
   get-log :=
 endif
 
-ifeq ($(HOST_NAME),darwin)
+include-android-exists := $(shell test -f $(LOCAL_PATH)/libselinux/src/android/android.c || echo "true")
+ifdef include-android-exists
   cmds := \
     $(shell wget -qO - "https://android.googlesource.com/platform/external/selinux/+/master/libselinux/include/selinux/android.h?format=text" | \
     base64 -d > $(LOCAL_PATH)/libselinux/include/selinux/android.h) \
