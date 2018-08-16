@@ -1,6 +1,8 @@
 LOCAL_PATH:= $(call my-dir)
 
-libselinux_src_files := \
+libselinux_src_files  := $(wildcard $(LOCAL_PATH)/libselinux/src/*.c)
+
+old:= \
   libselinux/src/audit2why.c \
   libselinux/src/avc.c \
   libselinux/src/avc_internal.c \
@@ -191,9 +193,8 @@ common_includes := \
   libsepol/include/sepol \
   libselinux/include \
   libselinux/include/selinux \
-  /usr/include/python2.7 \
-  /usr/include/python3.* \
-  /usr/local/include
+  libselinux/src/android \
+  /opt/sdk/ndk-bundle/prebuilt/linux-x86_64/include/python2.7
 
 yacc_flags := -x c -std=gnu89
 
