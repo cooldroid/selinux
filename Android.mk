@@ -319,6 +319,7 @@ LOCAL_STATIC_LIBRARIES := libselinux_static libpcre2 libsepol
 LOCAL_C_INCLUDES := $(common_includes)
 LOCAL_SRC_FILES := libselinux/utils/sefcontext_compile.c
 LOCAL_MODULE_TAGS := optional
+LOCAL_LDFLAGS := -static
 
 include $(BUILD_EXECUTABLE)
 
@@ -373,6 +374,7 @@ LOCAL_CFLAGS := $(yacc_flags) $(common_cflags)
 LOCAL_STATIC_LIBRARIES := libsepol
 LOCAL_CFLAGS += -std=gnu99 -fpic -fPIC
 LOCAL_YACCFLAGS := -v
+LOCAL_LDFLAGS := -static
 
 include $(BUILD_EXECUTABLE)
 
@@ -399,6 +401,7 @@ LOCAL_CFLAGS := $(yacc_flags) $(common_cflags)
 LOCAL_STATIC_LIBRARIES := libsepol
 LOCAL_CFLAGS += -std=gnu99 -fpic -fPIC
 LOCAL_YACCFLAGS := -v
+LOCAL_LDFLAGS := -static
 
 include $(BUILD_EXECUTABLE)
 
@@ -416,6 +419,7 @@ LOCAL_CFLAGS := $(yacc_flags) $(common_cflags)
 LOCAL_STATIC_LIBRARIES := libsepol
 LOCAL_CFLAGS += -std=gnu99 -fpic -fPIC
 LOCAL_MODULE_TAGS := optional
+LOCAL_LDFLAGS := -static
 
 include $(BUILD_EXECUTABLE)
 
@@ -433,5 +437,36 @@ LOCAL_CFLAGS := $(yacc_flags) $(common_cflags)
 LOCAL_STATIC_LIBRARIES :=  libsepol
 LOCAL_CFLAGS += -std=gnu99 -fpic -fPIC
 LOCAL_MODULE_TAGS := optional
+
+include $(BUILD_EXECUTABLE)
+
+##
+# matchpathcon
+#
+include $(CLEAR_VARS)
+
+LOCAL_MODULE := matchpathcon
+LOCAL_STATIC_LIBRARIES := libselinux_static libpcre2 libsepol
+LOCAL_C_INCLUDES := $(common_includes)
+LOCAL_SRC_FILES := libselinux/utils/matchpathcon.c
+LOCAL_MODULE_TAGS := optional
+CFLAGS := -O -Wall -W -Wundef -Wformat-y2k -Wformat-security -Winit-self -Wmissing-include-dirs \
+          -Wunused -Wunknown-pragmas -Wstrict-aliasing -Wshadow -Wpointer-arith \
+          -Wbad-function-cast -Wcast-align -Wwrite-strings -Waggregate-return \
+          -Wstrict-prototypes -Wold-style-definition -Wmissing-prototypes \
+          -Wmissing-declarations -Wmissing-noreturn -Wmissing-format-attribute \
+          -Wredundant-decls -Wnested-externs -Winline -Winvalid-pch -Wvolatile-register-var \
+          -Wdisabled-optimization -Wbuiltin-macro-redefined \
+          -Wattributes -Wmultichar \
+          -Wdeprecated-declarations -Wdiv-by-zero -Wdouble-promotion -Wendif-labels -Wextra \
+          -Wformat-extra-args -Wformat-zero-length -Wformat=2 -Wmultichar \
+          -Woverflow -Wpointer-to-int-cast -Wpragmas \
+          -Wno-missing-field-initializers -Wno-sign-compare \
+          -Wno-format-nonliteral -Wp,-D_FORTIFY_SOURCE=2 \
+          -fstack-protector-all --param=ssp-buxzffer-size=4 -fexceptions \
+          -fasynchronous-unwind-tables -fdiagnostics-show-option -funit-at-a-time \
+          -Werror -Wno-aggregate-return -Wno-redundant-decls
+
+LOCAL_CFLAGS += -Wall -Werror -DUSE_PCRE2 -DNO_PERSISTENTLY_STORED_PATTERNS $(common_cflags) $(CFLAGS)
 
 include $(BUILD_EXECUTABLE)
