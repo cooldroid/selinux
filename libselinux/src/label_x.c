@@ -128,7 +128,7 @@ static int init(struct selabel_handle *rec, const struct selinux_opt *opts,
 		errno = EINVAL;
 		return -1;
 	}
-	rec->spec_file = strdup(path);
+	rec->spec_files = strdup(path);
 
 	/* 
 	 * Perform two passes over the specification file.

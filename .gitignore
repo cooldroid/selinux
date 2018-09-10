@@ -10,7 +10,6 @@
 *.s
 *.mo
 *.pc
-
 # Misc
 *.patch
 *.gz
@@ -25,8 +24,18 @@ cscope.*
 .*.swp
 # Failsafes
 !.gitignore
-/include/
-/libselinux/src/android/android.c
-/libselinux/include/selinux/android.h
-/libselinux/src/android/android_common.h
-/libselinux/src/android/android_host.c
+# Android
+objs/
+libs/
+include/
+libselinux/include/selinux/android.h
+libselinux/src/android/*
+checkpolicy/lex.yy.c
+checkpolicy/y.tab.c
+checkpolicy/policy_parse.*
+xcheckpolicy/y.*
+# Mac OS
+*.DS_Store
+obj/
+jni/
+

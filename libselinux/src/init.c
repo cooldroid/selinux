@@ -61,7 +61,7 @@ int selinuxfs_exists(void)
 	size_t len;
 	ssize_t num;
 
-	fp = fopen("/proc/filesystems", "re");
+	fp = fopen("/proc/filesystems", "r");
 	if (!fp)
 		return 1; /* Fail as if it exists */
 #if __ANDROID_API__ >= 23
@@ -102,7 +102,7 @@ static void init_selinuxmnt(void)
 
 	/* At this point, the usual spot doesn't have an selinuxfs so
 	 * we look around for it */
-	fp = fopen("/proc/mounts", "re");
+	fp = fopen("/proc/mounts", "r");
 	if (!fp)
 		goto out;
 
@@ -165,3 +165,4 @@ static void fini_lib(void)
 {
 	fini_selinuxmnt();
 }
+

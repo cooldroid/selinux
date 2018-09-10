@@ -72,6 +72,7 @@ libpcre2_src_files := \
   pcre/dist2/src/pcre2_context.c \
   pcre/dist2/src/pcre2_dfa_match.c \
   pcre/dist2/src/pcre2_error.c \
+  pcre/dist2/src/pcre2_extuni.c \
   pcre/dist2/src/pcre2_find_bracket.c \
   pcre/dist2/src/pcre2_maketables.c \
   pcre/dist2/src/pcre2_match.c \
@@ -121,9 +122,8 @@ common_includes := \
   $(LOCAL_PATH)/libselinux/src \
   $(LOCAL_PATH)/libselinux/include \
   $(LOCAL_PATH)/libselinux/include/selinux \
-  /usr/include/python2.7 \
-  /usr/include/python3.* \
-  /usr/local/include
+  $(LOCAL_PATH)/libselinux/src/android \
+  $(ANDROID_NDK_HOME)/prebuilt/linux-x86_64/include/python2.7
 
 yacc_flags := -x c -std=gnu89
 
